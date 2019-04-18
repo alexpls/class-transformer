@@ -247,13 +247,12 @@ describe("custom transformation decorator", () => {
                 public hobby: any;
             }
 
-            const expectedHobby = { name: "typescript coding", specialAbility: "TESTING" };
-
             const model: Person = plainToClass(Person, json);
             expect(model).to.be.instanceof(Person);
             expect(model.hobby).to.be.instanceof(Programming);
-            expect(model.hobby).to.have.not.property("__type");
             expect(model.hobby).to.have.property("specialAbility", "TESTING");
+            expect(model.hobby).to.have.not.property("__type", "the class instance should not have a discriminator property");
+            expect(json.hobby.__type).to.equal("program", "the plain object's discriminator property should not be modified");
         }).to.not.throw();
     });
 
